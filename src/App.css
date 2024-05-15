@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "Pretendard";
+  src: url("./styles/fonts/Pretendard-Regular.woff2") format("woff2");
+}
+
+body {
+  margin: 0;
+  font-family: "Pretendard";
+  background-size: cover;
+  background: linear-gradient(
+    135deg,
+    var(--lightpink-color),
+    var(--violet-color)
+  );
+}
+
+input,
+textarea {
+  border-radius: 5px;
+  resize: none;
+  border: 1px solid var(--violet-color);
+  padding: 8px;
+  &:focus {
+    outline: 2px solid var(--violet-color);
+  }
+}
+
+button {
+  border-radius: 20px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  padding: 10px;
+}
+div {
+  box-sizing: border-box;
+}
+h3 {
+  text-align: center;
+}
