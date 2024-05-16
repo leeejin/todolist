@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import titleIcon from "../styles/images/title-icon.png";
 import { handleChangeFormatDate } from "../util/constants";
 import Alert from "./alert";
@@ -13,6 +13,11 @@ const Modal = ({ handleModalOpen, list }) => {
     date: handleChangeFormatDate(),
   });
   const [alerts, setAlerts] = useState({ isVisible: false, message: "" }); //alerts on/off
+
+  useEffect(() => {
+    document.body.style = "overflow:hidden";
+    return () => (document.body.style = "overflow:auto");
+  }, []);
 
   /** input이 변할때 info상태값도 변함 */
   const handleSendInfo = (e) => {
