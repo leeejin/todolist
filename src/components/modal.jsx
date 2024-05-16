@@ -12,7 +12,7 @@ const Modal = ({ handleModalOpen, list }) => {
     content: "",
     date: handleChangeFormatDate(),
   });
-  const [alert, setAlert] = useState({ isVisible: false, message: "" }); //alerts on/off
+  const [alerts, setAlerts] = useState({ isVisible: false, message: "" }); //alerts on/off
 
   useEffect(() => {
     document.body.style = "overflow:hidden";
@@ -46,7 +46,7 @@ const Modal = ({ handleModalOpen, list }) => {
       } else {
         message = "데이터는 14개 이상 저장 못해요";
       }
-      setAlert((prev) => ({
+      setAlerts((prev) => ({
         ...prev,
         isVisible: !prev.isVisible,
         message,
@@ -61,7 +61,7 @@ const Modal = ({ handleModalOpen, list }) => {
   };
   return (
     <>
-      {alert.isVisible && <Alert message={alert.message} />}
+      {alerts.isVisible && <Alert message={alerts.message} />}
       <div className="blackdrop" onClick={handleModalOpen} />
       <div className="whitedrop">
         <h3>
