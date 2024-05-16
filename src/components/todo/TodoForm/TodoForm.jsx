@@ -25,11 +25,11 @@ const Modal = ({ handleModalOpen, list }) => {
       content: content.length > 20 || !content.trim(),
     };
     const isNotDoneCount = list.filter((item) => !item.isDone).length;
-    if (error.title || error.content || isNotDoneCount >= 20) {
+    if (error.title || error.content || isNotDoneCount >= 15) {
       let message = "";
       if (error.title) message = "20자 이내의 제목을 입력해주세요";
       else if (error.content) message = "20자 이내의 내용을 입력해주세요";
-      else message = "데이터는 20개 이상 저장 못해요";
+      else message = "데이터는 15개 이상 저장 못해요";
 
       setAlerts((prev) => ({
         ...prev,

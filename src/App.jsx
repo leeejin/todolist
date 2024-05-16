@@ -3,7 +3,7 @@ import "./App.css";
 import "./styles/color.css";
 import "./styles/main.css";
 import Layout from "./templates/Layout";
-const Home = React.lazy(() => import("./components/todo/Todo"));
+const Home = React.lazy(() => import("./components/todo/TodoContainer"));
 function Loading() {
   return <div>Loading...</div>;
 }
