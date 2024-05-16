@@ -9,9 +9,9 @@ import Alert from "./alert";
 import Modal from "./modal";
 /** 메인함수 */
 const Home = () => {
-  const [list, setList] = useState([]); //데이터 넣는 리스트
+  const [lists, setLists] = useState([]); //데이터 넣는 리스트
   const [modal, setModal] = useState(false); // 모달 on/off
-  const [alerts, setAlerts] = useState({ isVisible: false, message: "" }); //alert창 on/off
+  const [alert, setAlert] = useState({ isVisible: false, message: "" }); //alert창 on/off
 
   /** 모달 on/off 함수 */
   const handleModalOpen = () => {
@@ -20,38 +20,38 @@ const Home = () => {
 
   /** 리스트 done 함수 */
   const handleListDone = (id) => {
-    const updatedList = list.map((item) =>
+    const updatedList = lists.map((item) =>
       item.id === id ? { ...item, isDone: true } : item
     );
     const isDoneCount = updatedList.filter((item) => item.isDone).length;
     if (isDoneCount > 14) {
-      setAlerts((prev) => ({
+      setAlert((prev) => ({
         ...prev,
         isVisible: !prev.isVisible,
         message: "완료한 리스트를 지워주세요",
       }));
       return;
     }
-    setList(updatedList);
+    setLists(updatedList);
   };
   /** 리스트 삭제 함수 */
   const handleListDelete = (id) => {
-    const updatedList = list.filter((item) => item.id !== id);
-    setList(updatedList);
+    const updatedList = lists.filter((item) => item.id !== id);
+    setLists(updatedList);
   };
 
   return (
     <div className="container d-flex">
-      {alerts.isVisible && <Alert message={alerts.message} />}
+      {alert.isVisible && <Alert message={alert.message} />}
 
-      {modal && <Modal handleModalOpen={handleModalOpen} list={list} />}
+      {modal && <Modal handleModalOpen={handleModalOpen} lists={lists} />}
       <div className="card">
         <h3>{handleChangeFormatDate()}</h3>
         <h4>Working...</h4>
         <h4>Done...</h4>
         <div>
-          {list.filter((item) => !item.isDone).length ? (
-            list
+          {lists.filter((item) => !item.isDone).length ? (
+            lists
               .filter((item) => !item.isDone)
               .map((item) => (
                 <ListItem
@@ -70,8 +70,8 @@ const Home = () => {
         </div>
 
         <div>
-          {list.filter((item) => item.isDone).length ? (
-            list
+          {lists.filter((item) => item.isDone).length ? (
+            lists
               .filter((item) => item.isDone)
               .map((item) => (
                 <ListItem
