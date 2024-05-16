@@ -7,7 +7,7 @@
 .container {
   max-width: 1200px;
   min-width: 800px;
-  margin: auto;
+  margin: 0 auto;
   height: 100vh;
 }
 
@@ -31,23 +31,6 @@
   cursor: pointer;
 }
 
-.blackdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 5;
-}
-.whitedrop {
-  position: fixed;
-  width: 400px;
-  text-align: center;
-  border-radius: 15px;
-  background-color: var(--white-color);
-  z-index: 10;
-}
 .card-items {
   float: left;
   width: 10%;
@@ -57,39 +40,7 @@
     cursor: pointer;
   }
 }
-.modal {
-  padding: 5px;
-  display: grid;
-  grid-template-areas:
-    "title"
-    "content"
-    "footer";
-  gap: 5px;
-}
-.modal-button-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  button {
-    width: 49.5%;
-    color: var(--white-color);
-    &:hover {
-      transition: all 0.5s;
-    }
-  }
-  button:nth-child(1) {
-    background-color: var(--violet-color);
-    &:hover {
-      background-color: var(--darkviolet-color);
-    }
-  }
-  button:nth-child(2) {
-    background-color: var(--lightviolet-color);
-    &:hover {
-      background-color: var(--violet-color);
-    }
-  }
-}
+
 .list-title {
   color: var(--violet-color);
   margin: 5px;
@@ -98,26 +49,4 @@
 .list-content {
   margin: 5px;
   font-size: 14px;
-}
-.alert {
-  position: fixed;
-  padding: 10px;
-  text-align: center;
-  border-radius: 15px;
-  background-color: var(--white-color);
-  box-shadow: 3px 3px 3px var(--grey-color);
-  z-index: 15;
-  top: -120px;
-  animation: alertAnimation 1.5s forwards;
-}
-@keyframes alertAnimation {
-  0% {
-    top: -120px;
-  }
-  50% {
-    top: 50px;
-  }
-  100% {
-    top: -120px;
-  }
 }

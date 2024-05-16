@@ -1,0 +1,22 @@
+.alert {
+  position: fixed;
+  padding: 10px;
+  text-align: center;
+  border-radius: 15px;
+  background-color: var(--white-color);
+  box-shadow: 3px 3px 3px var(--grey-color);
+  z-index: 15;
+  top: -120px;
+  animation: alertAnimation 1.5s forwards;
+}
+@keyframes alertAnimation {
+  0% {
+    top: -120px;
+  }
+  50% {
+    top: 50px;
+  }
+  100% {
+    top: -120px;
+  }
+}

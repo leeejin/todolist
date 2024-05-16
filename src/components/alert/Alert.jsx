@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import warningIcon from "../styles/images/warning-icon.png";
+import warningIcon from "../../styles/images/warning-icon.png";
+import "./alert.css";
 /** 알림창 */
 const Alert = ({ message }) => {
   return (

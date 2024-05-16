@@ -1,27 +1,28 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import addIcon from "../styles/images/add-icon.png";
-import checkIcon from "../styles/images/check-icon.png";
-import deleteIcon from "../styles/images/delete-icon.png";
-import noData from "../styles/images/noData.png";
-import { handleChangeFormatDate } from "../util/constants";
-import Alert from "./alert";
-import Modal from "./modal";
+import addIcon from "../../styles/images/add-icon.png";
+import checkIcon from "../../styles/images/check-icon.png";
+import deleteIcon from "../../styles/images/delete-icon.png";
+import noData from "../../styles/images/noData.png";
+import { handleChangeFormatDate } from "../../util/constants";
+import Alert from "../alert/Alert";
+import TodoForm from "./TodoForm/TodoForm";
+
 /** 메인함수 */
-const Home = () => {
-  const [list, setList] = useState([]); //데이터 넣는 리스트
+const Todo = () => {
+  const [lists, setList] = useState([]); //데이터 넣는 리스트
 
   const [modal, setModal] = useState(false); // 모달 on/off
-  const [alerts, setAlerts] = useState({ isVisible: false, message: "" }); //alert창 on/off
+  const [alert, setAlerts] = useState({ isVisible: false, message: "" }); //alert창 on/off
 
+  const workinglists = lists.filter((item) => !item.isDone);
+  const donelists = lists.filter((item) => item.isDone);
   /** 모달 on/off 함수 */
-  const handleModalOpen = () => {
-    setModal((prev) => !prev);
-  };
+  const handleModalOpen = () => setModal((prev) => !prev);
 
   /** 리스트 done 함수 */
   const handleListDone = (id) => {
-    const updatedList = list.map((item) =>
+    const updatedList = lists.map((item) =>
       item.id === id ? { ...item, isDone: true } : item
     );
     const isDoneCount = updatedList.filter((item) => item.isDone).length;
@@ -36,31 +37,27 @@ const Home = () => {
     setList(updatedList);
   };
   /** 리스트 삭제 함수 */
-  const handleListDelete = (id) => {
-    const updatedList = list.filter((item) => item.id !== id);
-    setList(updatedList);
-  };
+  const handleListDelete = (id) =>
+    setList(lists.filter((item) => item.id !== id));
 
   return (
-    <div className="container d-flex">
-      {alerts.isVisible && <Alert message={alerts.message} />}
+    <>
+      {alert.isVisible && <Alert message={alert.message} />}
 
-      {modal && <Modal handleModalOpen={handleModalOpen} list={list} />}
+      {modal && <TodoForm handleModalOpen={handleModalOpen} list={lists} />}
       <div className="card">
         <h3>{handleChangeFormatDate()}</h3>
         <h4>Working...</h4>
         <div className="card-sub">
-          {list.filter((item) => !item.isDone).length ? (
-            list
-              .filter((item) => !item.isDone)
-              .map((item) => (
-                <ListItem
-                  item={item}
-                  key={item.id}
-                  handleListDone={handleListDone}
-                  handleListDelete={handleListDelete}
-                />
-              ))
+          {workinglists.length ? (
+            workinglists.map((item) => (
+              <ListItem
+                item={item}
+                key={item.id}
+                handleListDone={handleListDone}
+                handleListDelete={handleListDelete}
+              />
+            ))
           ) : (
             <div className="d-flex">
               <img src={noData} width={"300px"} />
@@ -70,17 +67,15 @@ const Home = () => {
         </div>
         <h4>Done...</h4>
         <div className="card-sub">
-          {list.filter((item) => item.isDone).length ? (
-            list
-              .filter((item) => item.isDone)
-              .map((item) => (
-                <ListItem
-                  item={item}
-                  key={item.id}
-                  handleListDone={handleListDone}
-                  handleListDelete={handleListDelete}
-                />
-              ))
+          {donelists.length ? (
+            donelists.map((item) => (
+              <ListItem
+                item={item}
+                key={item.id}
+                handleListDone={handleListDone}
+                handleListDelete={handleListDelete}
+              />
+            ))
           ) : (
             <div className="d-flex">
               <img src={noData} width={"300px"} />
@@ -95,7 +90,7 @@ const Home = () => {
           width={"70px"}
         />
       </div>
-    </div>
+    </>
   );
 };
 
@@ -128,4 +123,4 @@ ListItem.propTypes = {
   handleListDelete: PropTypes.func.isRequired,
 };
 
-export default Home;
+export default Todo;

@@ -1,51 +1,36 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import titleIcon from "../styles/images/title-icon.png";
-import { handleChangeFormatDate } from "../util/constants";
-import Alert from "./alert";
+import { useEffect, useRef, useState } from "react";
+import titleIcon from "../../../styles/images/title-icon.png";
+import { handleChangeFormatDate } from "../../../util/constants";
+import Alert from "../../alert/Alert";
+import "./form.css";
 /** 모달 */
 const Modal = ({ handleModalOpen, list }) => {
-  const [info, setInfo] = useState({
-    //새로 추가할 객체
-    id: 0,
-    title: "",
-    content: "",
-    date: handleChangeFormatDate(),
-  });
-  const [alerts, setAlerts] = useState({ isVisible: false, message: "" }); //alerts on/off
+  const titleInputRef = useRef(null);
+  const [alert, setAlerts] = useState({ isVisible: false, message: "" }); //alerts on/off
 
   useEffect(() => {
     document.body.style = "overflow:hidden";
     return () => (document.body.style = "overflow:auto");
   }, []);
 
-  /** input이 변할때 info상태값도 변함 */
-  const handleSendInfo = (e) => {
-    const { name, value } = e.target;
-
-    setInfo((prev) => ({
-      ...prev,
-      [name]: value,
-      isDone: false,
-    }));
-  };
   /** 입력 함수 */
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target);
+    const title = formData.get("title");
+    const content = formData.get("content");
     const error = {
-      title: info.title.length < 2 || info.title.length > 20,
-      content: info.content.length < 2 || info.content.length > 20,
+      title: title.length > 20 || !title.trim(),
+      content: content.length > 20 || !content.trim(),
     };
     const isNotDoneCount = list.filter((item) => !item.isDone).length;
     if (error.title || error.content || isNotDoneCount >= 20) {
       let message = "";
-      if (error.title) {
-        message = "2자 ~20자 이내의 제목을 입력해주세요";
-      } else if (error.content) {
-        message = "2자 ~20자 이내의 내용을 입력해주세요";
-      } else {
-        message = "데이터는 20개 이상 저장 못해요";
-      }
+      if (error.title) message = "20자 이내의 제목을 입력해주세요";
+      else if (error.content) message = "20자 이내의 내용을 입력해주세요";
+      else message = "데이터는 20개 이상 저장 못해요";
+
       setAlerts((prev) => ({
         ...prev,
         isVisible: !prev.isVisible,
@@ -53,15 +38,22 @@ const Modal = ({ handleModalOpen, list }) => {
       }));
       return;
     }
-
-    const newId = list.length > 0 ? list[list.length - 1].id + 1 : 0; //id 생성
-    const newInfo = { ...info, id: newId }; // info에다가 새로운 id 넣기
+    const newInfo = {
+      //새로 추가할 객체
+      id: crypto.randomUUID(),
+      title,
+      content,
+      isDone: false,
+      date: handleChangeFormatDate(),
+    };
     list.push(newInfo);
+    titleInputRef.current.focus();
+    e.target.reset();
     handleModalOpen(); // 모달 off
   };
   return (
     <>
-      {alerts.isVisible && <Alert message={alerts.message} />}
+      {alert.isVisible && <Alert message={alert.message} />}
       <div className="blackdrop" onClick={handleModalOpen} />
       <div className="whitedrop">
         <h3>
@@ -70,17 +62,19 @@ const Modal = ({ handleModalOpen, list }) => {
         <form onSubmit={handleSubmit}>
           <div className="modal">
             <input
+              autoFocus
               type="text"
               name="title"
+              ref={titleInputRef}
               placeholder="제목을 입력해주세요"
-              onChange={handleSendInfo}
+              required
             />
             <textarea
               type="text"
               rows={9}
               name="content"
               placeholder="내용을 입력해주세요 (20자이내)"
-              onChange={handleSendInfo}
+              required
             />
             <div className="modal-button-box">
               <button type="submit">확인</button>
