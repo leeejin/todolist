@@ -18,24 +18,10 @@
   border-radius: 25px;
   padding: 5px;
   position: relative;
-  display: grid;
-
-  grid-template-rows: 50px 50px 1fr;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-  h3 {
-    grid-column: 1 /3;
-    grid-template-rows: 20px;
-  }
-  h4 {
-    grid-template-rows: 20px;
-    text-align: center;
-  }
-  div {
-    grid-row: 3/4;
-  }
 }
-
+.card-sub {
+  height: 300px;
+}
 .icon {
   position: absolute;
   bottom: -30px;
@@ -64,7 +50,7 @@
 }
 .card-items {
   float: left;
-  width: 50%;
+  width: 10%;
   padding: 5px;
   text-align: center;
   img {

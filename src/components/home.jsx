@@ -10,6 +10,7 @@ import Modal from "./modal";
 /** 메인함수 */
 const Home = () => {
   const [list, setList] = useState([]); //데이터 넣는 리스트
+
   const [modal, setModal] = useState(false); // 모달 on/off
   const [alerts, setAlerts] = useState({ isVisible: false, message: "" }); //alert창 on/off
 
@@ -24,7 +25,7 @@ const Home = () => {
       item.id === id ? { ...item, isDone: true } : item
     );
     const isDoneCount = updatedList.filter((item) => item.isDone).length;
-    if (isDoneCount > 14) {
+    if (isDoneCount > 20) {
       setAlerts((prev) => ({
         ...prev,
         isVisible: !prev.isVisible,
@@ -48,8 +49,7 @@ const Home = () => {
       <div className="card">
         <h3>{handleChangeFormatDate()}</h3>
         <h4>Working...</h4>
-        <h4>Done...</h4>
-        <div>
+        <div className="card-sub">
           {list.filter((item) => !item.isDone).length ? (
             list
               .filter((item) => !item.isDone)
@@ -63,13 +63,13 @@ const Home = () => {
               ))
           ) : (
             <div className="d-flex">
-              <img src={noData} width={"50%"} />
+              <img src={noData} width={"300px"} />
             </div>
           )}
           <div style={{ clear: "both" }} />
         </div>
-
-        <div>
+        <h4>Done...</h4>
+        <div className="card-sub">
           {list.filter((item) => item.isDone).length ? (
             list
               .filter((item) => item.isDone)
@@ -83,7 +83,7 @@ const Home = () => {
               ))
           ) : (
             <div className="d-flex">
-              <img src={noData} width={"50%"} />
+              <img src={noData} width={"300px"} />
             </div>
           )}
           <div style={{ clear: "both" }} />

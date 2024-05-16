@@ -37,14 +37,14 @@ const Modal = ({ handleModalOpen, list }) => {
       content: info.content.length < 2 || info.content.length > 20,
     };
     const isNotDoneCount = list.filter((item) => !item.isDone).length;
-    if (error.title || error.content || isNotDoneCount >= 14) {
+    if (error.title || error.content || isNotDoneCount >= 20) {
       let message = "";
       if (error.title) {
         message = "2자 ~20자 이내의 제목을 입력해주세요";
       } else if (error.content) {
         message = "2자 ~20자 이내의 내용을 입력해주세요";
       } else {
-        message = "데이터는 14개 이상 저장 못해요";
+        message = "데이터는 20개 이상 저장 못해요";
       }
       setAlerts((prev) => ({
         ...prev,
